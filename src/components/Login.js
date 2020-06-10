@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 
 const Login = () => {
+    const history = useHistory()
     const [creds, setCreds] = useState({username: '', password: ''})
 
     const handleChanges = (e) => {
@@ -11,7 +13,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.post('https://better-professor-app-1.herokuapp.com/api/auth/login/?type=p', creds)
-            .then(res => console.log(res))
+            .then(res => history.push('/players'))
             .catch(err => console.log(err))
     }
     return (
