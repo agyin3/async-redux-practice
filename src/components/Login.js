@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { login } from '../actions'
 
-const Login = () => {
+const Login = (props) => {
     const history = useHistory()
     const [creds, setCreds] = useState({username: '', password: ''})
 
@@ -12,10 +13,9 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('https://better-professor-app-1.herokuapp.com/api/auth/login/?type=p', creds)
-            .then(res => history.push('/players'))
-            .catch(err => console.log(err))
+        props.login(creds, history)
     }
+
     return (
         <div 
             style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}
@@ -39,4 +39,7 @@ const Login = () => {
     )
 }
 
-export default Login
+export default connect(
+    null,
+    {login}
+)(Login)
